@@ -1,4 +1,7 @@
+#include <framework/AssetManager.h>
+
 #include "config.h"
+#include "level/MainLevel.h"
 #include "gameFramework/GameApplication.h"
 
 namespace
@@ -22,5 +25,7 @@ namespace tf
             sf::Style::Titlebar || sf::Style::Close,
             TARGET_FRAME_RATE)
     {
+        AssetManager::Get().SetAssetRootDirectory(GetResourceDir());
+        weak<MainLevel> newWorld = LoadWorld<MainLevel>();
     }
 }

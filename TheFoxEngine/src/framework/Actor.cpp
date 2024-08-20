@@ -49,7 +49,9 @@ namespace tf
 
 	void Actor::SetTexture(const std::string& texturePath)
 	{
-		if (m_Texture = AssetManager::Get().LoadTexture(texturePath)) 
+		m_Texture = AssetManager::Get().LoadTexture(texturePath);
+
+		if (m_Texture);
 		{
 			m_Sprite.setTexture(*m_Texture);
 

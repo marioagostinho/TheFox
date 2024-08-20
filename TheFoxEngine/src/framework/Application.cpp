@@ -1,4 +1,6 @@
 #include "framework/Core.h"
+#include "framework/World.h"
+#include "framework/AssetManager.h"
 #include "framework/Application.h"
 
 namespace tf
@@ -10,7 +12,10 @@ namespace tf
         float targetFrameRate)
         : m_Window(sf::VideoMode(windowWidth, windowHeight), title, style),
         m_TargetFrameRate(targetFrameRate),
-        m_TickClock()
+        m_TickClock(),
+        m_CurrentWorld(nullptr),
+        m_CleanCycleClock(),
+        m_CleanCycleInterval(2.f)
     {
     }
 
@@ -54,7 +59,32 @@ namespace tf
 
     void Application::TickInternal(float deltaTime)
     {
+        // Tick
         Tick(deltaTime);
+
+        if (m_CurrentWorld)
+        {
+            m_CurrentWorld->TickInternal(deltaTime);
+        }
+
+        // Clean cycle
+        if (m_CleanCycleClock.getElapsedTime().asSeconds() >= m_CleanCycleInterval)
+        {
+            m_CleanCycleClock.restart();
+            AssetManager::Get().CleanCycle();
+
+            if (m_CurrentWorld)
+            {
+                m_CurrentWorld->CleanCycle();
+            }
+        }
+
+        if (m_PendingWorld)
+        {
+            m_CurrentWorld = m_PendingWorld;
+            m_CurrentWorld->BeginPlayInternal();
+            m_PendingWorld = nullptr;
+        }
     }
 
     void Application::Tick(float deltaTime)
@@ -70,6 +100,10 @@ namespace tf
 
     void Application::Render()
     {
+        if (m_CurrentWorld)
+        {
+            m_CurrentWorld->Render(m_Window);
+        }
     }
 
     bool Application::DispatchEvent(const sf::Event& event)

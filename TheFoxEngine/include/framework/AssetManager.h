@@ -11,7 +11,7 @@ namespace tf
 		static AssetManager& Get();
 
 		void CleanCycle();
-		inline void SetAssetRootDirectory(const std::string& path) { }
+		inline void SetAssetRootDirectory(const std::string& path) { m_RootDirectory = path; }
 
 		shared<sf::Texture> LoadTexture(const std::string& path);
 
@@ -36,7 +36,9 @@ namespace tf
 		auto found = container.find(path);
 
 		if (found != container.end())
+		{
 			return found->second;
+		}
 
 		shared<T> newAsset(new T);
 

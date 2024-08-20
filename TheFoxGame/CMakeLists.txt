@@ -1,6 +1,9 @@
 add_executable(${THE_FOX_GAME_TARGET_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/gameFramework/GameApplication.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/gameFramework/GameApplication.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/include/level/MainLevel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/level/MainLevel.cpp
 )
 
 target_include_directories(${THE_FOX_GAME_TARGET_NAME} PUBLIC
