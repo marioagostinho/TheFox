@@ -8,6 +8,7 @@
 namespace tf
 {
 	class World;
+	class ActorComponent;
 
 	class Actor : public Object
 	{
@@ -22,35 +23,36 @@ namespace tf
 		void TickInternal(float deltaTime);
 		virtual void Tick(float deltaTime);
 
+		inline const bool IsTickEnabled() const { return m_TickEnabled; }
+		inline void SetTickEnabled(bool ticking) { m_TickEnabled = ticking; }
+
+		// Components
+		template<typename T, typename... Args>
+		weak<T> AttachToActor(Args... args);
+		void CleanCycle();
+
 		virtual void Render(sf::RenderWindow& window);
 		void SetTexture(const std::string& texturePath);
 
-		// Location
 		sf::Vector2f GetActorLocation() const;
 		void SetActorLocation(const sf::Vector2f& newPosition);
 
-		// Rotation
 		float GetActorRotation() const;
 		void SetActorRotation(float newRotation);
 
-		// Offsets
 		void AddActorLocationOffset(const sf::Vector2f& offset);
 		void AddActorRotationOffset(float offset);
 
-		// Direction
 		sf::Vector2f GetActorForwardDirection() const;
 		sf::Vector2f GetActorRightDirection() const;
 
-		// Bounds
 		sf::FloatRect GetActorGlobalBounds() const;
 
-		// World
-		inline World* GetWorld() { return m_OwningWorld; }
-		inline const World* GetWorld() const { return m_OwningWorld; }
-
-		// Sprite
 		inline sf::Sprite& GetSprite() { return m_Sprite; }
 		inline const sf::Sprite& GetSprite() const { return m_Sprite; }
+
+		inline World* GetWorld() { return m_OwningWorld; }
+		inline const World* GetWorld() const { return m_OwningWorld; }
 
 		Delegate<Actor*> onActorDestroyed;
 
@@ -59,9 +61,20 @@ namespace tf
 
 		World* m_OwningWorld;
 		bool m_BeganPlay;
+		bool m_TickEnabled;
 
-		// Graphics
+		list<shared<ActorComponent>> m_ActorComponents;
+		list<shared<ActorComponent>> m_PendingActorComponents;
+
 		sf::Sprite m_Sprite;
 		shared<sf::Texture> m_Texture;
 	};
+
+	template<typename T, typename... Args>
+	weak<T> Actor::AttachToActor(Args... args)
+	{
+		shared<T> newActorComponent{ new T(this, args...) };
+		m_PendingActorComponents.push_back(newActorComponent);
+		return newActorComponent;
+	}
 }

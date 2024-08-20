@@ -3,6 +3,7 @@
 #include "framework/World.h"
 #include "framework/AssetManager.h"
 #include "framework/Math.h"
+#include "framework/ActorComponent.h"
 
 #include "framework/Actor.h"
 
@@ -11,6 +12,7 @@ namespace tf
 	Actor::Actor(World* owningWorld, const std::string& texturePath)
 		: m_OwningWorld(owningWorld),
 		m_BeganPlay(false),
+		m_TickEnabled(true),
 		m_Sprite(),
 		m_Texture()
 	{
@@ -38,13 +40,46 @@ namespace tf
 
 	void Actor::TickInternal(float deltaTime)
 	{
-		if (!IsPendingDestroy())
+		if (IsPendingDestroy() && !m_TickEnabled)
+			return;
+
+		// Spawn pending actor components
+		if (m_PendingActorComponents.size() > 0)
 		{
-			Tick(deltaTime);
+			for (shared<ActorComponent> component : m_PendingActorComponents)
+			{
+				m_ActorComponents.push_back(component);
+				component->BeginPlayInternal();
+			}
+
+			m_PendingActorComponents.clear();
 		}
+
+		// Tick actor components
+		for (shared<ActorComponent> component : m_ActorComponents)
+		{
+			component->TickInternal(deltaTime);
+		}
+		
+		Tick(deltaTime);
 	}
 	void Actor::Tick(float deltaTime)
 	{
+	}
+
+	void Actor::CleanCycle()
+	{
+		for (auto iter = m_ActorComponents.begin(); iter != m_ActorComponents.end();)
+		{
+			if (iter->get()->IsPendingDestroy())
+			{
+				iter = m_ActorComponents.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
 	}
 
 	void Actor::SetTexture(const std::string& texturePath)

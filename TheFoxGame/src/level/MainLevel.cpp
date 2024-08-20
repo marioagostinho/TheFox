@@ -1,5 +1,6 @@
 #include <framework/Core.h>
 #include <framework/Actor.h>
+#include <framework/ActorComponent.h>
 #include "level/MainLevel.h"
 
 namespace tf
@@ -12,6 +13,9 @@ namespace tf
 	void MainLevel::BeginPlay()
 	{
 		weak<Actor> newActor = SpawnActor<Actor>("fox.png");
+		weak<ActorComponent> newComponent = newActor.lock()->AttachToActor<ActorComponent>();
 		newActor.lock()->SetActorLocation({ 500.f, 500.f });
+		
+		newComponent.lock()->SetToDestroy();
 	}
 }

@@ -71,6 +71,7 @@ namespace tf
 			}
 			else
 			{
+				iter->get()->CleanCycle();
 				++iter;
 			}
 		}

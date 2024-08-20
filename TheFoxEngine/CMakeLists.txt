@@ -21,6 +21,9 @@ add_library(${THE_FOX_ENGINE_TARGET_NAME} STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Actor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Actor.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/ActorComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/ActorComponent.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/World.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/World.cpp
 )
