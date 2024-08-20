@@ -36,11 +36,11 @@ namespace tf
 		auto found = container.find(path);
 
 		if (found != container.end())
-			return->second;
+			return found->second;
 
 		shared<T> newAsset(new T);
 
-		if (newAsset->loadFromFile(m_RootDirectory + path)
+		if (newAsset->loadFromFile(m_RootDirectory + path))
 		{
 			container.insert({ path, newAsset });
 			return newAsset;
