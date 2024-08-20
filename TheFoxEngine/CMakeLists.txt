@@ -7,6 +7,9 @@ add_library(${THE_FOX_ENGINE_TARGET_NAME} STATIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Core.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Math.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Math.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Delegate.hpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/AssetManager.h
@@ -14,6 +17,12 @@ add_library(${THE_FOX_ENGINE_TARGET_NAME} STATIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Object.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Object.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Actor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Actor.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/World.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/World.cpp
 )
 
 target_include_directories(${THE_FOX_ENGINE_TARGET_NAME} PUBLIC

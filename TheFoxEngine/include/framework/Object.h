@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 
 #include "framework/Core.h"
 #include "framework/Delegate.hpp"
