@@ -59,7 +59,6 @@ namespace tf
 
     void Application::Tick(float deltaTime)
     {
-        LOG("ticking");
     }
 
     void Application::RenderInternal()
