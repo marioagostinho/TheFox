@@ -4,6 +4,8 @@ add_library(${THE_FOX_ENGINE_TARGET_NAME} STATIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Application.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Application.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Core.h
 )
 
 target_include_directories(${THE_FOX_ENGINE_TARGET_NAME} PUBLIC

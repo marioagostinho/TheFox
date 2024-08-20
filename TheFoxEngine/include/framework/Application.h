@@ -7,16 +7,19 @@ namespace tf
     class Application
     {
     public:
-        Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style);
+        Application(unsigned int windowWidth, 
+            unsigned int windowHeight, 
+            const std::string& title, 
+            sf::Uint32 style,
+            float targetFrameRate = 60.f);
+        
         void Run();
-
+        void QuitApplication();
+        virtual void Tick(float deltaTime);
+        virtual void Render();
 
         inline sf::Vector2u GetWindowSize() const { return m_Window.getSize(); };
         inline sf::RenderWindow& GetWindow() { return m_Window; }
-
-        virtual void Tick(float deltaTime);
-        virtual void Render();
-        void QuitApplication();
 
     private:
         void TickInternal(float deltaTime);

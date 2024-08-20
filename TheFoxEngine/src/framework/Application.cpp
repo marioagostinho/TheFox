@@ -1,3 +1,4 @@
+#include "framework/Core.h"
 #include "framework/Application.h"
 
 namespace tf
@@ -5,9 +6,10 @@ namespace tf
     Application::Application(unsigned int windowWidth, 
         unsigned int windowHeight, 
         const std::string& title, 
-        sf::Uint32 style)
+        sf::Uint32 style,
+        float targetFrameRate)
         : m_Window(sf::VideoMode(windowWidth, windowHeight), title, style),
-        m_TargetFrameRate(60.f),
+        m_TargetFrameRate(targetFrameRate),
         m_TickClock()
     {
     }
@@ -36,7 +38,7 @@ namespace tf
                 }
             }
 
-            // Franes
+            // Frames
             float frameDeltaTime = m_TickClock.restart().asSeconds();
             accumulatedTime += frameDeltaTime;
 
@@ -57,6 +59,7 @@ namespace tf
 
     void Application::Tick(float deltaTime)
     {
+        LOG("ticking");
     }
 
     void Application::RenderInternal()
