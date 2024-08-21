@@ -12,10 +12,8 @@ namespace tf
 
 	void MainLevel::BeginPlay()
 	{
-		weak<Actor> newActor = SpawnActor<Actor>("fox.png");
+		weak<Actor> newActor = SpawnActor<Actor>();
 		weak<ActorComponent> newComponent = newActor.lock()->AttachToActor<ActorComponent>();
 		newActor.lock()->SetActorLocation({ 500.f, 500.f });
-		
-		newComponent.lock()->SetToDestroy();
 	}
 }

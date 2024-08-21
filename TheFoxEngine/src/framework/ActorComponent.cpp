@@ -3,10 +3,10 @@
 
 namespace tf
 {
-	ActorComponent::ActorComponent(Actor* owningActor)
+	ActorComponent::ActorComponent(Actor *owningActor)
 		: m_OwningActor(owningActor),
-		m_BeganPlay(false),
-		m_TickEnabled(true)
+		  m_BeganPlay(false),
+		  m_TickEnabled(true)
 	{
 	}
 
@@ -33,6 +33,5 @@ namespace tf
 
 	void ActorComponent::Tick(float deltaTime)
 	{
-		LOG("Component");
 	}
 }

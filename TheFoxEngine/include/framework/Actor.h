@@ -9,13 +9,12 @@ namespace tf
 {
 	class World;
 	class ActorComponent;
+	class Animation;
 
 	class Actor : public Object
 	{
 	public:
 		Actor(World* owningWorld, const std::string& texturePath = "");
-
-		virtual void SetToDestroy() override;
 
 		void BeginPlayInternal();
 		virtual void BeginPlay();
@@ -53,8 +52,6 @@ namespace tf
 
 		inline World* GetWorld() { return m_OwningWorld; }
 		inline const World* GetWorld() const { return m_OwningWorld; }
-
-		Delegate<Actor*> onActorDestroyed;
 
 	private:
 		void CenterPivot();
