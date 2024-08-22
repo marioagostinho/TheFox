@@ -53,6 +53,9 @@ namespace tf
 		inline World* GetWorld() { return m_OwningWorld; }
 		inline const World* GetWorld() const { return m_OwningWorld; }
 
+	protected:
+		virtual void SetupInput();
+
 	private:
 		void CenterPivot();
 

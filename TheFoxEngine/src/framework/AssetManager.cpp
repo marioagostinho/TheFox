@@ -26,6 +26,4 @@ namespace tf
 	{
 		return LoadAsset(path, m_LoadedTextureMap);
 	}
-
-
 }

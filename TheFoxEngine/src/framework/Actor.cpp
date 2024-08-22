@@ -26,7 +26,7 @@ namespace tf
 		};
 
 		weak<AnimationComponent> aniComp = AttachToActor<AnimationComponent>(animations);
-		aniComp.lock()->PlayAnimation("run");
+		aniComp.lock()->PlayAnimation("idle");
 	}
 
 	void Actor::BeginPlayInternal()
@@ -103,6 +103,10 @@ namespace tf
 
 			CenterPivot();
 		}
+	}
+
+	void Actor::SetupInput()
+	{
 	}
 
 	void Actor::CenterPivot()

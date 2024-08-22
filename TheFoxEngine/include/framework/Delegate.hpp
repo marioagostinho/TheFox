@@ -14,15 +14,17 @@ namespace tf
 		template<typename ClassName>
 		void BindAction(weak<Object> obj, void(ClassName::* callback)(Args...))
 		{
-			std::function<bool(Args...)> callbackFun = [obj, callback](Args... args)->bool
-			{
-				if (!obj.expired())
+			auto callbackFun = [obj, callback](Args... args)->bool
 				{
-					(static_cast<ClassName*>(obj.lock().get())->*callback)(args...);
-					return true;
-				}
-				return false;
-			}
+					if (!obj.expired())
+					{
+						(static_cast<ClassName*>(obj.lock().get())->*callback)(args...);
+						return true;
+					}
+					return false;
+				};
+
+			m_Callbacks.push_back(callbackFun);
 		}
 
 		void Broadcast(Args... args)
@@ -38,6 +40,11 @@ namespace tf
 					iter = m_Callbacks.erase(iter);
 				}
 			}
+		}
+
+		bool IsBound() const
+		{
+			return !m_Callbacks.empty();
 		}
 
 	private:

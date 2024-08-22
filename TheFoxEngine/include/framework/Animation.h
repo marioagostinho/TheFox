@@ -16,6 +16,8 @@ namespace tf
 
 		void SetSprite(sf::Sprite& sprite);
 
+		Delegate<Animation*> onAnimationEnded;
+
 	private:
 		void SetTexture(const std::string& texturePath);
 		void CenterPivot();

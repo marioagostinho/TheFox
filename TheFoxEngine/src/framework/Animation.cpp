@@ -27,6 +27,9 @@ namespace tf
 			m_CurrentFrame = (m_CurrentFrame + 1) % m_Frames.size();
 			m_Sprite.setTextureRect(m_Frames[m_CurrentFrame]);
 		}
+
+		if (m_CurrentFrame % m_Frames.size() == 0)
+			onAnimationEnded.Broadcast(this);
 	}
 
 	void Animation::StopAnimation()

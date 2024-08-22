@@ -1,6 +1,7 @@
 #include "framework/Core.h"
 #include "framework/World.h"
 #include "framework/AssetManager.h"
+#include "framework/InputManager.h"
 #include "framework/Application.h"
 
 namespace tf
@@ -51,6 +52,7 @@ namespace tf
             {
                 accumulatedTime -= targetDeltaTime;
 
+                InputManager::Get().HandleInput();
                 TickInternal(targetDeltaTime);
                 RenderInternal();
             }

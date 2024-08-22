@@ -1,5 +1,6 @@
 #include "framework/Actor.h"
 #include "framework/Application.h"
+#include "framework/InputManager.h"
 
 #include "framework/World.h"
 
@@ -24,6 +25,15 @@ namespace tf
 
 	void World::BeginPlay()
 	{
+		// Testing input
+		InputManager& inputManager = InputManager::Get();
+
+		inputManager.BindKey<World>(sf::Keyboard::A, -1, GetWeakRef(), 
+			&World::OnMovementBeginPressed, &World::OnMovementPressed, &World::OnMovementEndPressed);
+		inputManager.BindKey<World>(sf::Keyboard::D, 1, GetWeakRef(), 
+			nullptr, &World::OnMovementPressed, nullptr);
+
+
 	}
 
 	void World::TickInternal(float deltaTime)
@@ -75,5 +85,19 @@ namespace tf
 				++iter;
 			}
 		}
+	}
+	void World::OnMovementPressed(float value)
+	{
+		LOG("%f", value);
+	}
+
+	void World::OnMovementBeginPressed(float value)
+	{
+		LOG("Button Pressed");
+	}
+
+	void World::OnMovementEndPressed(float value)
+	{
+		LOG("Not Button Pressed anymore");
 	}
 }

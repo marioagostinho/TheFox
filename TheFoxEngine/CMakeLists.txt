@@ -15,6 +15,9 @@ add_library(${THE_FOX_ENGINE_TARGET_NAME} STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/AssetManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/AssetManager.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/InputManager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/InputManager.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Object.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Object.cpp
 
