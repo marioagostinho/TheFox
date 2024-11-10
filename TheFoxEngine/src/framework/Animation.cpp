@@ -1,6 +1,8 @@
 #include "framework/AssetManager.h"
 #include "framework/Animation.h"
 
+#include "framework/Core.h"
+
 namespace tf
 {
 	Animation::Animation(const std::string& texturePath, 
@@ -9,8 +11,6 @@ namespace tf
 		 m_Texture(), m_ElapsedTime(0.f), m_CurrentFrame(0)
 	{
 		SetTexture(texturePath);
-		m_FrameWidth = CalculateWidht();
-		m_FrameHeight = CalculateHeight();
 		CalculateFrames(m_Frames);
 	}
 
@@ -54,34 +54,13 @@ namespace tf
 		if (m_Texture)
 		{
 			m_Sprite.setTexture(*m_Texture);
+			m_Sprite.setTextureRect(sf::IntRect(sf::Vector2i(), sf::Vector2i(m_Texture->getSize().x, m_Texture->getSize().y)));
+			
+			m_FrameWidth = m_Texture->getSize().x / m_Columns;
+			m_FrameHeight = m_Texture->getSize().y / m_Rows;
 
-			int width = m_Texture->getSize().x;
-			int height = m_Texture->getSize().y;
-			m_Sprite.setTextureRect(sf::IntRect(sf::Vector2i(), sf::Vector2i(width, height)));
-
-			CenterPivot();
+			m_Sprite.setOrigin(m_FrameHeight / 2, 0.f);
 		}
-	}
-
-	void Animation::CenterPivot()
-	{
-		sf::FloatRect bound = m_Sprite.getGlobalBounds();
-		m_Sprite.setOrigin(bound.width / 2.f, bound.height / 2.f);
-	}
-
-	float Animation::CalculateWidht()
-	{
-		if (!m_Texture)
-			return 0.f;
-
-		return m_Texture->getSize().x / m_Columns;
-	}
-	float Animation::CalculateHeight()
-	{
-		if (!m_Texture)
-			return 0.f;
-
-		return m_Texture->getSize().y / m_Rows;
 	}
 
 	void Animation::CalculateFrames(list<sf::IntRect>& frames)

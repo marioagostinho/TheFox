@@ -30,10 +30,6 @@ namespace tf
 		inline const Application* GetApplication() const { return m_OwningApp; }
 
 	private:
-		void OnMovementPressed(float value);
-		void OnMovementBeginPressed(float value);
-		void OnMovementEndPressed(float value);
-
 		Application* m_OwningApp;
 		bool m_BeganPlay;
 

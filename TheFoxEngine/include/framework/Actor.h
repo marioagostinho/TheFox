@@ -9,7 +9,6 @@ namespace tf
 {
 	class World;
 	class ActorComponent;
-	class Animation;
 
 	class Actor : public Object
 	{
@@ -56,6 +55,8 @@ namespace tf
 	protected:
 		virtual void SetupInput();
 
+		sf::Sprite m_Sprite;
+
 	private:
 		void CenterPivot();
 
@@ -66,7 +67,6 @@ namespace tf
 		list<shared<ActorComponent>> m_ActorComponents;
 		list<shared<ActorComponent>> m_PendingActorComponents;
 
-		sf::Sprite m_Sprite;
 		shared<sf::Texture> m_Texture;
 	};
 

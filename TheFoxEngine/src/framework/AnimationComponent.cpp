@@ -1,11 +1,11 @@
 #include "framework/Animation.h"
 #include "framework/Actor.h"
 #include "framework/AnimationComponent.h"
+#include "framework/Core.h"
 
 namespace tf
 {
-	AnimationComponent::AnimationComponent(Actor* owningActor, 
-		map<std::string, shared<Animation>> animations)
+	AnimationComponent::AnimationComponent(Actor* owningActor, map<std::string, shared<Animation>> animations)
 		: ActorComponent(owningActor),
 		m_Animations(animations),
 		m_CurrentAnimation()

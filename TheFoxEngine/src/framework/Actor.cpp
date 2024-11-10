@@ -4,8 +4,6 @@
 #include "framework/AssetManager.h"
 #include "framework/Math.h"
 #include "framework/ActorComponent.h"
-#include "framework/Animation.h"
-#include "framework/AnimationComponent.h"
 
 #include "framework/Actor.h"
 
@@ -19,14 +17,6 @@ namespace tf
 		m_Texture()
 	{
 		SetTexture(texturePath);
-
-		map<std::string, shared<Animation>> animations = {
-			{ "idle", std::make_shared<Animation>("Characters/Fox/Idle.png", 11, 1, 0.09f, m_Sprite) },
-			{ "run", std::make_shared<Animation>("Characters/Fox/Run.png", 12, 1, 0.083f, m_Sprite) }
-		};
-
-		weak<AnimationComponent> aniComp = AttachToActor<AnimationComponent>(animations);
-		aniComp.lock()->PlayAnimation("idle");
 	}
 
 	void Actor::BeginPlayInternal()

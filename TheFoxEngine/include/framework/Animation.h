@@ -20,10 +20,6 @@ namespace tf
 
 	private:
 		void SetTexture(const std::string& texturePath);
-		void CenterPivot();
-
-		float CalculateWidht();
-		float CalculateHeight();
 		void CalculateFrames(list<sf::IntRect>& frames);
 
 		sf::Sprite& m_Sprite;
@@ -37,4 +33,6 @@ namespace tf
 		float m_ElapsedTime;
 		unsigned int m_CurrentFrame;
 	};
+
+	using AnimMap = map<std::string, shared<Animation>>;
 }
