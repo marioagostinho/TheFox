@@ -23,26 +23,38 @@ namespace tf
 	{
 		for (auto& mapping : m_KeyMappings)
 		{
-			bool isCurrentlyPressed = sf::Keyboard::isKeyPressed(mapping.key);
+			float value = 0.f;
+			bool isMapPressed = false;
 
-			if (isCurrentlyPressed)
+			for (auto keyValue : mapping.KeyValueMap)
+			{
+				bool isKeyPressed = sf::Keyboard::isKeyPressed(keyValue.first);
+
+				if (isKeyPressed)
+				{
+					value += keyValue.second;
+					isMapPressed = true;
+				}
+			}
+
+			if (isMapPressed)
 			{
 				if (!mapping.wasPressed && mapping.onBeginPressed.IsBound())
 				{
-					mapping.onBeginPressed.Broadcast(mapping.value);
+					mapping.onBeginPressed.Broadcast();
 				}
 
 				if (mapping.onPressed.IsBound())
 				{
-					mapping.onPressed.Broadcast(mapping.value);
+					mapping.onPressed.Broadcast(value);
 				}
 			}
-			else if (mapping.wasPressed && !isCurrentlyPressed && mapping.onEndPressed.IsBound())
+			else if (mapping.wasPressed && !isMapPressed && mapping.onEndPressed.IsBound())
 			{
-				mapping.onEndPressed.Broadcast(mapping.value);
+				mapping.onEndPressed.Broadcast();
 			}
 
-			mapping.wasPressed = isCurrentlyPressed;
+			mapping.wasPressed = isMapPressed;
 		}
 	}
 }

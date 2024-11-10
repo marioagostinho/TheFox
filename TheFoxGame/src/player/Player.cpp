@@ -29,30 +29,39 @@ namespace tf
 		};
 
 		m_AnimationComponent = AttachToActor<AnimationComponent>(animations);
-		m_AnimationComponent.lock()->PlayAnimation("idle");
+		m_AnimationComponent.lock()->PlayAnimationByName("idle");
 	}
 
 	void Player::SetupInput()
 	{
 		InputManager& inputManager = InputManager::Get();
 
-		inputManager.BindKey<Player>(sf::Keyboard::A, -1.f, GetWeakRef(),
-			nullptr, &Player::OnMovementPressed, &Player::OnMovementEnded);
-		inputManager.BindKey<Player>(sf::Keyboard::D, 1.f, GetWeakRef(),
-			nullptr, &Player::OnMovementPressed, &Player::OnMovementEnded);
+		inputManager.BindKey<Player>(
+			{
+				{sf::Keyboard::A, -1.f},
+				{sf::Keyboard::D, 1.f}
+			},
+			GetWeakRef(),
+			nullptr, & Player::OnMovementPressed, & Player::OnMovementEnded);
 	}
 
 	void Player::OnMovementPressed(float value)
 	{
-		m_AnimationComponent.lock()->PlayAnimation("run");
+		m_AnimationComponent.lock()->PlayAnimationByName("run");
 
 		m_Velocity = sf::Vector2f(value * m_Speed, 0.f);
-		m_Sprite.setScale(value, 1.f);
+
+		if (value != 0.f)
+		{
+			m_Sprite.setScale(value, 1.f);
+		}
 	}
 
-	void Player::OnMovementEnded(float value)
+	void Player::OnMovementEnded()
 	{
-		m_AnimationComponent.lock()->PlayAnimation("idle");
+		LOG("Not pressing map");
+
+		m_AnimationComponent.lock()->PlayAnimationByName("idle");
 		m_Velocity = sf::Vector2f(0.f, 0.f);
 	}
 }

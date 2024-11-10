@@ -7,21 +7,18 @@
 
 namespace tf
 {
-	enum class InputSate
-	{
-		BeginPressed,
-		Pressed,
-		EndPressed
-	};
-
 	struct KeyMapping
 	{
-		sf::Keyboard::Key key;
-		float value;
-		Delegate<float> onBeginPressed;
+		map<sf::Keyboard::Key, float> KeyValueMap;
+		Delegate<> onBeginPressed;
 		Delegate<float> onPressed;
-		Delegate<float> onEndPressed;
+		Delegate<> onEndPressed;
 		bool wasPressed = false;
+
+		KeyMapping(map<sf::Keyboard::Key, float> keyValueMap)
+		{
+			KeyValueMap = keyValueMap;
+		}
 	};
 
 	class InputManager
@@ -30,11 +27,11 @@ namespace tf
 		static InputManager& Get();
 
 		template<typename T>
-		void BindKey(sf::Keyboard::Key key, float value,
+		void BindKey(map<sf::Keyboard::Key, float> keyValueMap,
 			weak<Object> object,
-			void(T::* onBeginPressed)(float) = nullptr,
+			void(T::* onBeginPressed)() = nullptr,
 			void(T::* onPressed)(float) = nullptr,
-			void(T::* onEndPressed)(float) = nullptr);
+			void(T::* onEndPressed)() = nullptr);
 
 		void HandleInput();
 
@@ -48,13 +45,13 @@ namespace tf
 	};
 
 	template<typename T>
-	void InputManager::BindKey(sf::Keyboard::Key key, float value,
+	void InputManager::BindKey(map<sf::Keyboard::Key, float> keyValueMap,
 		weak<Object> object,
-		void(T::* onBeginPressed)(float),
+		void(T::* onBeginPressed)(),
 		void(T::* onPressed)(float),
-		void(T::* onEndPressed)(float))
+		void(T::* onEndPressed)())
 	{
-		KeyMapping mapping = { key, value };
+		KeyMapping mapping(keyValueMap);
 
 		if (onBeginPressed)
 		{

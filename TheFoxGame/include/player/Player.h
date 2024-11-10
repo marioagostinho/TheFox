@@ -16,6 +16,6 @@ namespace tf
 		virtual void SetupInput() override;
 
 		void OnMovementPressed(float value);
-		void OnMovementEnded(float value);
+		void OnMovementEnded();
 	};
 }
