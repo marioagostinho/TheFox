@@ -13,7 +13,7 @@ namespace tf
 
 		void PlayAnimation(float deltaTime);
 		void StopAnimation();
-
+		
 		void SetSprite(sf::Sprite& sprite);
 
 		Delegate<Animation*> onAnimationEnded;

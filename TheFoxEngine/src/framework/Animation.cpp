@@ -1,8 +1,6 @@
 #include "framework/AssetManager.h"
 #include "framework/Animation.h"
 
-#include "framework/Core.h"
-
 namespace tf
 {
 	Animation::Animation(const std::string& texturePath, 

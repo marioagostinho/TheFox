@@ -14,7 +14,8 @@ namespace tf
 
 		virtual void Tick(float deltaTime) override;
 
-		void PlayAnimation(const std::string& name);
+		void PlayAnimationByName(const std::string& name);
+		const std::string GetCurrentAnimationName();
 
 	protected:
 		map<std::string, shared<Animation>> m_Animations;

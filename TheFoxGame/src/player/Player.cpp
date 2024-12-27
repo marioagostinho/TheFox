@@ -18,7 +18,10 @@ namespace tf
 
 	void Player::Tick(float deltaTime)
 	{
-		AddActorLocationOffset(m_Velocity * deltaTime);
+		if (m_Velocity != sf::Vector2f())
+		{
+			AddActorLocationOffset(m_Velocity * deltaTime);
+		}
 	}
 
 	void Player::SetupAnimations()
@@ -34,9 +37,7 @@ namespace tf
 
 	void Player::SetupInput()
 	{
-		InputManager& inputManager = InputManager::Get();
-
-		inputManager.BindKey<Player>(
+		InputManager::Get().BindKey<Player>(
 			{
 				{sf::Keyboard::A, -1.f},
 				{sf::Keyboard::D, 1.f}
@@ -47,20 +48,26 @@ namespace tf
 
 	void Player::OnMovementPressed(float value)
 	{
-		m_AnimationComponent.lock()->PlayAnimationByName("run");
-
+		const std::string animationName = m_AnimationComponent.lock()->GetCurrentAnimationName();
 		m_Velocity = sf::Vector2f(value * m_Speed, 0.f);
 
 		if (value != 0.f)
 		{
 			m_Sprite.setScale(value, 1.f);
+			
+			if (animationName != "run")
+			{
+				m_AnimationComponent.lock()->PlayAnimationByName("run");
+			}
+		}
+		else if (animationName == "run")
+		{
+			m_AnimationComponent.lock()->PlayAnimationByName("idle");
 		}
 	}
 
 	void Player::OnMovementEnded()
 	{
-		LOG("Not pressing map");
-
 		m_AnimationComponent.lock()->PlayAnimationByName("idle");
 		m_Velocity = sf::Vector2f(0.f, 0.f);
 	}

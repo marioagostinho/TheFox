@@ -20,7 +20,7 @@ namespace tf
 		}
 	}
 
-	void AnimationComponent::PlayAnimation(const std::string& name)
+	void AnimationComponent::PlayAnimationByName(const std::string& name)
 	{
 		if (m_Animations.empty() || m_CurrentAnimation == m_Animations[name])
 			return;
@@ -28,5 +28,21 @@ namespace tf
 		m_CurrentAnimation = m_Animations[name];
 		m_CurrentAnimation->StopAnimation();
 		m_CurrentAnimation->SetSprite(GetActor()->GetSprite());
+	}
+
+	const std::string AnimationComponent::GetCurrentAnimationName()
+	{
+		if (!m_CurrentAnimation)
+			return std::string();
+
+		for (auto animation : m_Animations)
+		{
+			if (animation.second == m_CurrentAnimation)
+			{
+				return animation.first;
+			}
+		}
+
+		return std::string();
 	}
 }
